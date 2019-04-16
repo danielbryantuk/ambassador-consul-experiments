@@ -30,13 +30,15 @@ kubectl port-forward $(kubectl get pods --no-headers -o custom-columns=":metadat
 
 # View in browser -> http://localhost:8500/ui/dc1/services
 
-# Apply our deplpoyment/config/mapping
+
+# Apply our deployment/config/mapping
 kubectl apply -f qotm-deployment.yaml
 kubectl apply -f qotm-config.yaml
 kubectl apply -f qotm-consul-mapping.yaml
 
 # Check Consul UI for service
 # Check Ambassador UI for Mapping
+
 
 # Get the AMBASSADOR_IP external load balancer IP
 export AMBASSADOR_IP=$(kubectl get services --field-selector=metadata.name=ambassador -o jsonpath='{.items[0].status.loadBalancer.ingress[0].ip}')
