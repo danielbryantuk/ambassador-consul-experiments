@@ -1,0 +1,26 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: consul-sd
+  annotations:
+    getambassador.io/config: |
+      ---
+      apiVersion: ambassador/v1
+      kind: TLSContext
+      name: ambassador-consul-connect
+      hosts: []
+      secret: ambassador-consul-connect
+      ---
+      apiVersion: ambassador/v1
+      kind: Mapping
+      name: consul_qotm_ssl_mapping
+      prefix: /qotm-consul-ssl/
+      service: qotm-proxy
+      tls: ambassador-consul-connect
+      load_balancer:
+        policy: round_robin
+spec:
+  ports:
+  - name: http
+    port: 80
